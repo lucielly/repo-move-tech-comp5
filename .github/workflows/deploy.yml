@@ -68,4 +68,11 @@ jobs:
         export KUBECONFIG=kubeconfig.yaml
         export MGC_REGISTRY_NAME=${{ secrets.MGC_REGISTRY_NAME }}
         envsubst < k8s/app.yaml | kubectl apply -f -
-        kubectl rollout status deployment/cloud-application
+          echo "=== PODS ==="
+          kubectl get pods -o wide
+
+          echo "=== DEPLOYMENT ==="
+          kubectl describe deployment cloud-application
+
+          echo "=== ROLLOUT ==="
+          kubectl rollout status deployment/cloud-application --timeout=60s
