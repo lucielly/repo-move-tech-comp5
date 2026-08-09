@@ -69,3 +69,16 @@ jobs:
         export MGC_REGISTRY_NAME=${{ secrets.MGC_REGISTRY_NAME }}
         envsubst < k8s/app.yaml | kubectl apply -f -
          
+
+    - name: Verificar Kubernetes
+      run: |
+        export KUBECONFIG=kubeconfig.yaml
+
+        echo "=== PODS ==="
+        kubectl get pods -o wide
+
+        echo "=== SERVICE ==="
+        kubectl get service cloud-application
+
+        echo "=== DEPLOYMENT ==="
+        kubectl get deployment cloud-application
